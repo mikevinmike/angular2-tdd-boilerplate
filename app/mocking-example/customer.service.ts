@@ -1,9 +1,4 @@
 import {Injectable} from 'angular2/core'
-
-
-
-// customer.service
-import {Injectable} from 'angular2/core'
 import {ProductService} from './product.service'
 
 @Injectable() // nötig, da ProductService injiziert wird

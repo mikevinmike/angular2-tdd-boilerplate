@@ -1,7 +1,7 @@
 import {it, describe, expect, beforeEach, inject, beforeEachProviders} from 'angular2/testing';
 import {provide} from 'angular2/core';
-import {CustomerService} from './services';
-import {ProductService} from './services';
+import {CustomerService} from './customer.service';
+import {ProductService} from './product.service';
 
 class ProductServiceMock {
     public getProductsByCustomerId():string[] {
