@@ -7,19 +7,14 @@ class MockTestService {
 }
 
 describe('TestService with Mock', function() {
-    let testService: TestService;
 
     beforeEachProviders(() => [
             provide(TestService, {useClass: MockTestService})
     ]);
 
-    beforeEach(inject([TestService], function (_testService_: TestService) {
-        testService = _testService_;
-    }));
-
-    it('should have name property set', function() {
+    it('should have name property set', inject([TestService], function (testService: TestService) {
         expect(testService.name).toBe('Mocked Service');
-    });
+    }));
 
 });
 
