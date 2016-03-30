@@ -9,7 +9,12 @@ describe("AppComponent", function () {
       appComponent = new AppComponent()
    });
 
-   it("should exist", function () {
-      expect(appComponent).toBeDefined();
+   it('should have name property', function() {
+      expect(appComponent.name).toBe('John');
    });
+
+   it('should say hello with name property', function() {
+      expect(appComponent.sayHello()).toBe('Hello John');
+   });
+
 });
