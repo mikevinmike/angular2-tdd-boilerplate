@@ -1,4 +1,5 @@
-import {it, describe, expect, beforeEach, beforeEachProviders, inject} from 'angular2/testing';
+import {it, describe, expect, beforeEachProviders, inject} from 'angular2/testing';
+import {TestComponentBuilder, ComponentFixture, injectAsync} from 'angular2/testing';
 import {AppComponent} from './app.component';
 import {Hero} from './app.component';
 
@@ -20,18 +21,6 @@ describe("AppComponent", () => {
       expect(appComponent.hero).toBeDefined();
    }));
 
-
-
-   //it('should render', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-   //   return tcb.createAsync(AppComponent).then((componentFixture: ComponentFixture) => {
-   //      const element = componentFixture.nativeElement;
-   //      let appComponentInstance = componentFixture.componentInstance;
-   //
-   //      componentFixture.detectChanges();
-   //      expect(element.querySelectorAll('h1').length).toBe(1);
-   //   });
-   //}));
-
    describe("hero", function () {
 
       let hero:Hero;
@@ -49,6 +38,15 @@ describe("AppComponent", () => {
       });
 
    });
+
+   it('should render', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+      return tcb.createAsync(AppComponent).then((componentFixture: ComponentFixture) => {
+         const element = componentFixture.nativeElement;
+         let appComponentInstance = componentFixture.componentInstance;
+         componentFixture.detectChanges();
+         expect(element.querySelectorAll('h1').length).toBe(1);
+      });
+   }));
 
 });
 
