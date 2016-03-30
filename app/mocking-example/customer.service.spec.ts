@@ -3,7 +3,7 @@ import {provide} from 'angular2/core';
 import {CustomerService} from './customer.service';
 import {ProductService} from './product.service';
 
-class ProductServiceMock {
+class MockProductService {
     public getProductsByCustomerId():string[] {
         return ["potatoe", 'honey'];
     }
@@ -12,7 +12,7 @@ class ProductServiceMock {
 describe('TestService with Mock', () => {
 
     beforeEachProviders(() => [
-        provide(ProductService, {useClass: ProductServiceMock}),
+        provide(ProductService, {useClass: MockProductService}),
         CustomerService
     ]);
 
