@@ -4,8 +4,6 @@ import {Hero} from './app.component';
 
 describe("AppComponent", () => {
 
-   let appComponent:AppComponent;
-
    beforeEachProviders(() => [
       AppComponent
    ]);
