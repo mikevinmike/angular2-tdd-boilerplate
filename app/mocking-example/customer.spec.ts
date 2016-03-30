@@ -9,7 +9,7 @@ class ProductServiceMock {
     }
 }
 
-describe('TestService with Mock', function() {
+describe('TestService with Mock', () => {
 
     beforeEachProviders(() => [
         provide(ProductService, {useClass: ProductServiceMock}),

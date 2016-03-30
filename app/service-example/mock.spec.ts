@@ -6,13 +6,13 @@ class MockTestService {
     public name: string = 'Mocked Service';
 }
 
-describe('TestService with Mock', function() {
+describe('TestService with Mock', () => {
 
     beforeEachProviders(() => [
             provide(TestService, {useClass: MockTestService})
     ]);
 
-    it('should have name property set', inject([TestService], function (testService: TestService) {
+    it('should have name property set', inject([TestService], (testService: TestService) => {
         expect(testService.name).toBe('Mocked Service');
     }));
 
