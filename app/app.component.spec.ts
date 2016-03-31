@@ -65,7 +65,7 @@ describe('AppComponent', () => {
     it('should render an input bound to the hero name', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb.createAsync(AppComponent)
             .then((fixture:ComponentFixture) => {
-                let element = fixture.debugElement.nativeElement;
+                let element = fixture.nativeElement;
                 let appComponent = fixture.componentInstance;
                 // look if the binding into the DOM works
                 appComponent.selectedHero = {id: 5, name: 'George'};
