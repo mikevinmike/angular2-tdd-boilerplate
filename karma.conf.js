@@ -60,12 +60,8 @@ module.exports = function (config) {
         coverageReporter: {
             dir: 'coverage/',
             reporters: [
-                //{ type: 'text-summary' },
                 { type: 'json', subdir: '.', file: 'report.json' }
-                //{ type: 'html' }
-                ]
-            //type: 'html',
-            //dir: 'coverage/'
+            ]
         },
         remapIstanbulReporter: {
             src: 'coverage/report.json',
