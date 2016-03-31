@@ -18,9 +18,9 @@ export class Hero {
       `
 })
 export class AppComponent {
-    public title = "tour of Heroes";
+    public title = 'Tour of Heroes';
     public hero:Hero = {
         id: 1,
-        name: "Windstorm"
-    }
+        name: 'Windstorm'
+    };
 }
