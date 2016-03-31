@@ -18,6 +18,7 @@ module.exports = function (config) {
 
             // paths loaded via module imports
             {pattern: 'app/**/*.js', included: false, watched: true},
+            {pattern: 'app/**/*.html', included: false, watched: true},
 
             // paths to support debugging with source maps in dev tools
             {pattern: 'app/**/*.ts', included: false, watched: false},
