@@ -62,7 +62,6 @@ describe('AppComponent', () => {
     it('should render a subheader containing the hero name', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb.createAsync(AppComponent)
             .then((fixture:ComponentFixture) => {
-                fixture.detectChanges();
                 let element = fixture.nativeElement;
                 let appComponent = fixture.componentInstance;
                 appComponent.hero.name = 'George';
@@ -76,10 +75,9 @@ describe('AppComponent', () => {
     it('should render an input bound to the hero name', injectAsync([TestComponentBuilder], fakeAsync((tcb:TestComponentBuilder) => {
         return tcb.createAsync(AppComponent)
             .then((fixture:ComponentFixture) => {
-                fixture.detectChanges();
                 let element = fixture.debugElement.nativeElement;
                 let appComponent = fixture.componentInstance;
-                let input = element.querySelectorAll('input').item(0);
+                let input = element.querySelector('input');
                 // look if the binding into the DOM works
                 appComponent.hero.name = 'George';
                 fixture.detectChanges();
