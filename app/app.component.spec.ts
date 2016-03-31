@@ -23,7 +23,6 @@ describe('AppComponent', () => {
     it('should render a header', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb.createAsync(AppComponent)
             .then((fixture:ComponentFixture) => {
-                fixture.detectChanges();
                 let element = fixture.nativeElement;
                 let appComponent = fixture.componentInstance;
                 fixture.detectChanges();
