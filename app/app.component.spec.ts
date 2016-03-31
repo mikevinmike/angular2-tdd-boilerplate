@@ -2,7 +2,6 @@ import {
     it,
     describe,
     expect,
-    beforeEach,
     beforeEachProviders,
     inject,
     TestComponentBuilder,
@@ -25,16 +24,16 @@ describe('AppComponent', () => {
         expect(appComponent.title).toBeDefined();
     }));
 
-    it("should have selectedHero", inject([AppComponent], (appComponent:AppComponent) => {
+    it('should have selectedHero', inject([AppComponent], (appComponent:AppComponent) => {
         expect(appComponent.title).toBeDefined();
     }));
 
-    it("should have an array heroes", inject([AppComponent], (appComponent:AppComponent) => {
+    it('should have an array heroes', inject([AppComponent], (appComponent:AppComponent) => {
         expect(appComponent.heroes).toBeDefined();
         expect(appComponent.heroes instanceof Array).toBe(true);
     }));
 
-    it("should change the selectedHero through onSelect()", inject([AppComponent], (appComponent:AppComponent) => {
+    it('should change the selectedHero through onSelect()', inject([AppComponent], (appComponent:AppComponent) => {
         let hero = {id: 48, name: 'Frederic'};
         appComponent.onSelect(hero);
         expect(appComponent.selectedHero).toBe(hero);

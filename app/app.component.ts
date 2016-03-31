@@ -11,7 +11,7 @@ export class Hero {
     styleUrls: ['app/app.component.css']
 })
 export class AppComponent {
-    public title = "tour of Heroes";
+    public title = 'Tour of Heroes';
     public heroes = HEROES;
     public selectedHero:Hero;
 
