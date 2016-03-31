@@ -2,6 +2,7 @@ import {
     it,
     describe,
     expect,
+    beforeEach,
     beforeEachProviders,
     inject,
     TestComponentBuilder,
