@@ -7,10 +7,11 @@ import {
     inject,
     TestComponentBuilder,
     ComponentFixture,
-    injectAsync
+    injectAsync,
+    tick,
+    fakeAsync
 } from "angular2/testing";
-import {AppComponent} from "./app.component";
-import {Hero} from './app.component';
+import {AppComponent, Hero} from "./app.component";
 
 describe("AppComponent", () => {
 
@@ -52,12 +53,45 @@ describe("AppComponent", () => {
         return tcb.createAsync(AppComponent)
             .then((fixture:ComponentFixture) => {
                 fixture.detectChanges();
-                let element = fixture.elementRef.nativeElement;
-                let appComponent = fixture.componentInstance;
+                let element = fixture.nativeElement;
                 fixture.detectChanges();
                 expect(element.querySelectorAll('h1').length).toBe(1);
             });
     }));
+
+    it('should render a subheader containing the hero name', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
+        return tcb.createAsync(AppComponent)
+            .then((fixture:ComponentFixture) => {
+                fixture.detectChanges();
+                let element = fixture.nativeElement;
+                let appComponent = fixture.componentInstance;
+                appComponent.hero.name = 'Sepp';
+                fixture.detectChanges();
+                let subheaders = element.querySelectorAll('h2');
+                expect(subheaders.length).toBe(1);
+                expect(subheaders.item(0).innerText.includes('Sepp')).toBe(true);
+            });
+    }));
+
+    it('should render an input bound to the hero name', injectAsync([TestComponentBuilder], fakeAsync((tcb:TestComponentBuilder) => {
+        return tcb.createAsync(AppComponent)
+            .then((fixture:ComponentFixture) => {
+                fixture.detectChanges();
+                let element = fixture.debugElement.nativeElement;
+                let appComponent = fixture.componentInstance;
+                let input = element.querySelectorAll('input').item(0);
+                // look if the binding into the DOM works
+                appComponent.hero.name = 'Sepp';
+                fixture.detectChanges();
+                expect(input.value).toEqual('Sepp');
+                // look if the binding back from the DOM into the Compontent works
+                input.value = 'Hugo';
+                input.dispatchEvent(new Event('input'));
+                fixture.detectChanges();
+                tick();
+                expect(appComponent.hero.name).toEqual('Hugo');
+            });
+    })));
     
 });
 
