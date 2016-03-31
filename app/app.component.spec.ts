@@ -2,7 +2,6 @@ import {
     it,
     describe,
     expect,
-    beforeEach,
     beforeEachProviders,
     inject,
     TestComponentBuilder,
@@ -25,7 +24,7 @@ describe("AppComponent", () => {
         return tcb.createAsync(AppComponent)
             .then((fixture:ComponentFixture) => {
                 fixture.detectChanges();
-                let element = fixture.elementRef.nativeElement;
+                let element = fixture.nativeElement;
                 let appComponent = fixture.componentInstance;
                 fixture.detectChanges();
                 expect(element.querySelectorAll('h1').length).toBe(1);
