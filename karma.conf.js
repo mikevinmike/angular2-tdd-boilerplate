@@ -18,6 +18,7 @@ module.exports = function (config) {
 
             // paths loaded via module imports
             {pattern: 'app/**/*.js', included: false, watched: true},
+            {pattern: 'app/**/*.html', included: false, watched: true},
 
             // paths to support debugging with source maps in dev tools
             {pattern: 'app/**/*.ts', included: false, watched: false},
@@ -37,6 +38,8 @@ module.exports = function (config) {
         colors: true,
 
         autoWatch: true,
+
+        singleRun: true,
 
         browsers: ['Chrome'],
 
@@ -61,7 +64,7 @@ module.exports = function (config) {
             dir: 'coverage/',
             reporters: [
                 { type: 'json', subdir: '.', file: 'report.json' }
-                ]
+            ]
         },
         remapIstanbulReporter: {
             src: 'coverage/report.json',
@@ -70,8 +73,6 @@ module.exports = function (config) {
             },
             timeoutNotCreated: 1000, // default value
             timeoutNoMoreFiles: 1000 // default value
-        },
-
-        singleRun: true
+        }
     })
 };
