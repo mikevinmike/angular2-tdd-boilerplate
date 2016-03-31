@@ -2,6 +2,7 @@ import {
     it,
     describe,
     expect,
+    beforeEach,
     beforeEachProviders,
     inject,
     TestComponentBuilder,
@@ -10,17 +11,17 @@ import {
 } from "angular2/testing";
 import {AppComponent, Hero} from "./app.component";
 
-describe("AppComponent", () => {
+describe('AppComponent', () => {
 
     beforeEachProviders(() => [
         AppComponent
     ]);
 
-    it("should exist", inject([AppComponent], (appComponent:AppComponent) => {
+    it('should exist', inject([AppComponent], (appComponent:AppComponent) => {
         expect(appComponent).toBeDefined();
     }));
 
-    it("should have title", inject([AppComponent], (appComponent:AppComponent) => {
+    it('should have title', inject([AppComponent], (appComponent:AppComponent) => {
         expect(appComponent.title).toBeDefined();
     }));
 
@@ -103,13 +104,13 @@ describe("AppComponent", () => {
 
 });
 
-describe("Hero", () => {
+describe('Hero', () => {
 
     beforeEachProviders(() => [
         Hero
     ]);
 
-    it("should exist", inject([Hero], (hero:Hero) => {
+    it('should exist', inject([Hero], (hero:Hero) => {
         expect(hero).toBeDefined();
     }));
 
