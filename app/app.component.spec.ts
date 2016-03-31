@@ -8,7 +8,7 @@ import {
     ComponentFixture,
     injectAsync
 } from "angular2/testing";
-import {AppComponent, Hero} from "./app.component";
+import {AppComponent} from "./app.component";
 
 describe('AppComponent', () => {
 
@@ -48,42 +48,6 @@ describe('AppComponent', () => {
             });
     }));
 
-    it('should render a subheader containing the hero name', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
-        return tcb.createAsync(AppComponent)
-            .then((fixture:ComponentFixture) => {
-                let element = fixture.nativeElement;
-                let appComponent = fixture.componentInstance;
-
-                appComponent.selectedHero = {id: 5, name: 'George'};
-                fixture.detectChanges();
-                let subheaders = element.querySelectorAll('h2');
-                expect(subheaders.length).toBeGreaterThan(0);
-                expect(subheaders.item(0).innerText.includes('George')).toBe(true);
-            });
-    }));
-
-    it('should render an input bound to the hero name', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
-        return tcb.createAsync(AppComponent)
-            .then((fixture:ComponentFixture) => {
-                let element = fixture.debugElement.nativeElement;
-                let appComponent = fixture.componentInstance;
-                // look if the binding into the DOM works
-                appComponent.selectedHero = {id: 5, name: 'George'};
-                fixture.detectChanges();
-                let input = element.querySelector('input');
-                expect(input.value).toEqual('George');
-
-                // CURRENTLY NOT WORKING (external HTML (templateUrl) and fakeAsync
-                // leads to jasmine timeout (Async callback was not invoked ...)
-                // look if the binding back from the DOM into the Compontent works
-                // input.value = 'Lara';
-                // input.dispatchEvent(new Event('input'));
-                // fixture.detectChanges();
-                // tick();
-                // expect(appComponent.selectedHero.name).toEqual('Lara');
-            });
-    }));
-
     it('should render a list of heroes', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb.createAsync(AppComponent)
             .then((fixture:ComponentFixture) => {
@@ -101,16 +65,28 @@ describe('AppComponent', () => {
             });
     }));
 
-});
+    it('should include a my-hero-detail tag', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
+        return tcb.createAsync(AppComponent)
+            .then((fixture:ComponentFixture) => {
+                let element = fixture.nativeElement;
+                let myHeroDetails = element.querySelectorAll('my-hero-detail');
+                expect(myHeroDetails.length).toBe(1);
+            });
+    }));
 
-describe('Hero', () => {
-
-    beforeEachProviders(() => [
-        Hero
-    ]);
-
-    it('should exist', inject([Hero], (hero:Hero) => {
-        expect(hero).toBeDefined();
+    it('should change selectedHero on list item click', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
+        return tcb.createAsync(AppComponent)
+            .then((fixture:ComponentFixture) => {
+                let element = fixture.nativeElement;
+                let appComponent = fixture.componentInstance;
+                let aHero = {id: 53, name: 'Jack'};
+                appComponent.heroes = [aHero];
+                fixture.detectChanges();
+                let listElement = element.querySelector('li');
+                listElement.dispatchEvent(new Event('click'));
+                fixture.detectChanges();
+                expect(appComponent.selectedHero).toBe(aHero);
+            });
     }));
 
 });
