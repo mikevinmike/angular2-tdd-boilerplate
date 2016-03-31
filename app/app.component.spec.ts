@@ -10,13 +10,13 @@ import {
 } from "angular2/testing";
 import {AppComponent} from "./app.component";
 
-describe("AppComponent", () => {
+describe('AppComponent', () => {
 
     beforeEachProviders(() => [
         AppComponent
     ]);
 
-    it("should exist", inject([AppComponent], (appComponent:AppComponent) => {
+    it('should exist', inject([AppComponent], (appComponent:AppComponent) => {
         expect(appComponent).toBeDefined();
     }));
 
