@@ -38,6 +38,8 @@ module.exports = function (config) {
 
         autoWatch: true,
 
+        singleRun: true,
+
         browsers: ['Chrome'],
 
         // Karma plugins loaded
@@ -70,8 +72,6 @@ module.exports = function (config) {
             },
             timeoutNotCreated: 1000, // default value
             timeoutNoMoreFiles: 1000 // default value
-        },
-
-        singleRun: true
+        }
     })
 };
