@@ -9,15 +9,34 @@ import {
     injectAsync
 } from "angular2/testing";
 import {HeroDetailComponent} from "./hero-detail.component";
+import {provide} from "angular2/core";
+import {HeroService} from "./hero.service";
+import { RouteParams } from 'angular2/router';
+
+
+class MockHeroService {
+    public getHero() {
+        return Promise.resolve({id: 1, name: "Hercules"});
+    }
+}
 
 describe('HeroDetailComponent', () => {
 
     beforeEachProviders(() => [
-        HeroDetailComponent
+        provide(HeroService, {useClass: MockHeroService}),
+        HeroDetailComponent,
+        provide(RouteParams, {useValue: new RouteParams({id: '1'})})
     ]);
 
     it('should exist', inject([HeroDetailComponent], (heroDetailComponent:HeroDetailComponent) => {
         expect(heroDetailComponent).toBeDefined();
+    }));
+
+    it('should go back in browser history on goBack()', inject([HeroDetailComponent], (heroDetailComponent:HeroDetailComponent) => {
+        let hasCalled = false;
+        window.history.back = () => hasCalled = true;
+        heroDetailComponent.goBack();
+        expect(hasCalled).toBe(true);
     }));
 
     it('should render a subheader containing the hero name', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
@@ -26,6 +45,7 @@ describe('HeroDetailComponent', () => {
                 let element = fixture.nativeElement;
                 let heroDetailComponent = fixture.componentInstance;
 
+                fixture.detectChanges();
                 heroDetailComponent.hero = {id: 5, name: 'George'};
                 fixture.detectChanges();
                 let subheaders = element.querySelectorAll('h2');
@@ -39,6 +59,7 @@ describe('HeroDetailComponent', () => {
             .then((fixture:ComponentFixture) => {
                 let element = fixture.nativeElement;
                 let heroDetailComponent = fixture.componentInstance;
+                fixture.detectChanges();
                 // look if the binding into the DOM works
                 heroDetailComponent.hero = {id: 5, name: 'George'};
                 fixture.detectChanges();

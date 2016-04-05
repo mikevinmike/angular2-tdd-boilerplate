@@ -8,13 +8,25 @@ import {
     ComponentFixture,
     injectAsync,fakeAsync, tick
 } from "angular2/testing";
-import {provide} from "angular2/core";
+import {provide, ApplicationRef} from "angular2/core";
+import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, APP_BASE_HREF, ROUTER_PRIMARY_COMPONENT, RouteRegistry, Location, Router } from 'angular2/router';
 import {AppComponent} from "./app.component";
 import {HeroService} from "./hero.service";
+import {MockApplicationRef} from 'angular2/src/mock/mock_application_ref';
+import {HeroesComponent} from "./heroes.component";
+import {SpyLocation} from 'angular2/src/mock/location_mock';
+import {RootRouter} from 'angular2/src/router/router';
+
+// change MockApplicationRef to return AppComponent as componentType
+Object.defineProperty(MockApplicationRef.prototype, "componentTypes", {
+    value: [AppComponent],
+    enumerable: true,
+    configurable: true
+});
 
 class MockHeroService {
     public getHeroes() {
-        return Promise.resolve([ { id: 1, name: "Hercules" } ]);
+        return Promise.resolve([{id: 1, name: "Hercules"}]);
     }
 }
 
@@ -23,11 +35,14 @@ describe('AppComponent', () => {
     beforeEachProviders(() => [
         provide(HeroService, {useClass: MockHeroService}),
         AppComponent,
+        RouteRegistry,
+        provide(Location, {useClass: SpyLocation}),
+        provide(Router, {useClass: RootRouter}),
+        provide(ROUTER_PRIMARY_COMPONENT, {useValue: AppComponent}),
+        provide(ApplicationRef, {useClass: MockApplicationRef}),
+        provide(APP_BASE_HREF, {useValue: '/'}),
+
     ]);
-
-    beforeEach(() => {
-
-    });
 
     it('should exist', inject([AppComponent], (appComponent:AppComponent) => {
         expect(appComponent).toBeDefined();
@@ -37,21 +52,22 @@ describe('AppComponent', () => {
         expect(appComponent.title).toBeDefined();
     }));
 
-    it('should have selectedHero', inject([AppComponent], (appComponent:AppComponent) => {
-        expect(appComponent.title).toBeDefined();
+    it('should be able to navigate to Heroes', injectAsync([Router, Location], (router:Router, location:Location) => {
+        return router.navigate(['Heroes']).then(() => {
+            expect(location.path()).toBe('/heroes');
+        });
     }));
 
-    it('should have an array heroes', inject([AppComponent], fakeAsync((appComponent:AppComponent) => {
-        appComponent.ngOnInit(); // with inject ngOnInit does not get called
-        tick(); // wait for the promise to be resolved (fakeAsync needed for tick())
-        expect(appComponent.heroes).toBeDefined();
-        expect(appComponent.heroes instanceof Array).toBe(true);
-    })));
+    it('should be able to navigate to Dashboard', injectAsync([Router, Location], (router:Router, location:Location) => {
+        return router.navigate(['Dashboard']).then(() => {
+            expect(location.path()).toBe('/dashboard');
+        });
+    }));
 
-    it('should change the selectedHero through onSelect()', inject([AppComponent], (appComponent:AppComponent) => {
-        let hero = {id: 48, name: 'Frederic'};
-        appComponent.onSelect(hero);
-        expect(appComponent.selectedHero).toBe(hero);
+    it('should be able to navigate to HeroDetail', injectAsync([Router, Location], (router:Router, location:Location) => {
+        return router.navigate(['HeroDetail', {id: 45}]).then(() => {
+            expect(location.path()).toBe('/detail/45');
+        });
     }));
 
     it('should render a header', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
@@ -63,47 +79,12 @@ describe('AppComponent', () => {
             });
     }));
 
-    it('should render a list of heroes', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
+    it('should include a router-outlet tag', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb.createAsync(AppComponent)
             .then((fixture:ComponentFixture) => {
                 let element = fixture.nativeElement;
-                let appComponent = fixture.componentInstance;
-
-                fixture.detectChanges();  // call detectChanges() to let ngOnInit be executed first
-                appComponent.heroes = [
-                    {id: 5, name: 'Chris'},
-                    {id: 6, name: 'Laura'},
-                    {id: 5, name: 'Victoria'}
-                ];
-                fixture.detectChanges();
-                let listElements = element.querySelectorAll('li');
-                expect(listElements.length).toBe(3);
-            });
-    }));
-
-    it('should include a my-hero-detail tag', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
-        return tcb.createAsync(AppComponent)
-            .then((fixture:ComponentFixture) => {
-                let element = fixture.nativeElement;
-                let myHeroDetails = element.querySelectorAll('my-hero-detail');
+                let myHeroDetails = element.querySelectorAll('router-outlet');
                 expect(myHeroDetails.length).toBe(1);
-            });
-    }));
-
-    it('should change selectedHero on list item click', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
-        return tcb.createAsync(AppComponent)
-            .then((fixture:ComponentFixture) => {
-                let element = fixture.nativeElement;
-                let appComponent = fixture.componentInstance;
-
-                fixture.detectChanges();  // call detectChanges() to let ngOnInit be executed first
-                let aHero = {id: 53, name: 'Jack'};
-                appComponent.heroes = [aHero];
-                fixture.detectChanges();
-                let listElement = element.querySelector('li');
-                listElement.dispatchEvent(new Event('click'));
-                fixture.detectChanges();
-                expect(appComponent.selectedHero).toBe(aHero);
             });
     }));
 
