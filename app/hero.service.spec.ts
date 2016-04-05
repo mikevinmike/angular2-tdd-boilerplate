@@ -27,5 +27,18 @@ describe('HeroService', () => {
 
     });
 
+    describe('getHeroesSlowly()', () => {
+
+        it('should return a promise with an array of heroes', inject([HeroService], fakeAsync((heroService:HeroService) => {
+            let promise = heroService.getHeroesSlowly();
+            expect(promise instanceof Promise).toBe(true);
+            Promise.resolve(promise).then(function (heroes) {
+                expect(heroes instanceof Array).toBe(true);
+            });
+            tick(2000); // wait 2 seconds
+        })));
+
+    });
+
 
 });
