@@ -1,0 +1,12 @@
+<h3>Students:</h3>
+<ul>
+    <li *ngFor="#student of students">
+        {{ student.name }}
+    </li>
+</ul>
+New Student:
+<input #newStudent />
+<button (click)="addStudent(newStudent.value); newStudent.value=''">
+    Add Student
+</button>
+<div class="error" *ngIf="errorMessage">{{errorMessage}}</div>
