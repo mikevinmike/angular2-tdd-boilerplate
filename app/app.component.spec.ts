@@ -6,15 +6,28 @@ import {
     inject,
     TestComponentBuilder,
     ComponentFixture,
-    injectAsync
+    injectAsync,fakeAsync, tick
 } from "angular2/testing";
+import {provide} from "angular2/core";
 import {AppComponent} from "./app.component";
+import {HeroService} from "./hero.service";
+
+class MockHeroService {
+    public getHeroes() {
+        return Promise.resolve([ { id: 1, name: "Hercules" } ]);
+    }
+}
 
 describe('AppComponent', () => {
 
     beforeEachProviders(() => [
-        AppComponent
+        provide(HeroService, {useClass: MockHeroService}),
+        AppComponent,
     ]);
+
+    beforeEach(() => {
+
+    });
 
     it('should exist', inject([AppComponent], (appComponent:AppComponent) => {
         expect(appComponent).toBeDefined();
@@ -28,10 +41,12 @@ describe('AppComponent', () => {
         expect(appComponent.title).toBeDefined();
     }));
 
-    it('should have an array heroes', inject([AppComponent], (appComponent:AppComponent) => {
+    it('should have an array heroes', inject([AppComponent], fakeAsync((appComponent:AppComponent) => {
+        appComponent.ngOnInit(); // with inject ngOnInit does not get called
+        tick(); // wait for the promise to be resolved (fakeAsync needed for tick())
         expect(appComponent.heroes).toBeDefined();
         expect(appComponent.heroes instanceof Array).toBe(true);
-    }));
+    })));
 
     it('should change the selectedHero through onSelect()', inject([AppComponent], (appComponent:AppComponent) => {
         let hero = {id: 48, name: 'Frederic'};
@@ -54,6 +69,7 @@ describe('AppComponent', () => {
                 let element = fixture.nativeElement;
                 let appComponent = fixture.componentInstance;
 
+                fixture.detectChanges();  // call detectChanges() to let ngOnInit be executed first
                 appComponent.heroes = [
                     {id: 5, name: 'Chris'},
                     {id: 6, name: 'Laura'},
@@ -79,6 +95,8 @@ describe('AppComponent', () => {
             .then((fixture:ComponentFixture) => {
                 let element = fixture.nativeElement;
                 let appComponent = fixture.componentInstance;
+
+                fixture.detectChanges();  // call detectChanges() to let ngOnInit be executed first
                 let aHero = {id: 53, name: 'Jack'};
                 appComponent.heroes = [aHero];
                 fixture.detectChanges();
