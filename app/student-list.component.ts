@@ -23,7 +23,6 @@ export class StudentListComponent implements OnInit {
     }
 
     // Komponente, welchen den Service konsumiert
-    getStudents() {
     getStudents():void {
         this._studentService.getStudents()
             .subscribe(
