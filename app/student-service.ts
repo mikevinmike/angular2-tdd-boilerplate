@@ -16,9 +16,13 @@ export class StudentService {
 
         // TODO
 
+    getStudents():Promise<Student[]> {
+        return this.http.get(this._studentsUrl) // URL, die aufgerufen wird
+            .map(res => <Student[]> res.json().data)
+            .catch(this.handleError) // Falls ein Fehler auftritt
     }
 
-    addStudent(name:string) {
+    addStudent(name:string):Promise<Student> {
         let body = JSON.stringify({name});
         let headers = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions({headers: headers});
@@ -26,7 +30,7 @@ export class StudentService {
         // TODO
     }
 
-    private handleError(error:Response) {
+    private handleError(error:Response):any {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
     }
