@@ -18,18 +18,18 @@ export class StudentListComponent implements OnInit {
     errorMessage:string;
     students:Student[] = [];
 
-    ngOnInit() {
+    ngOnInit():void {
         this.getStudents();
     }
 
-    getStudents() {
+    getStudents():void {
         this._studentService.getStudents()
             .subscribe(
                 students => this.students = students,
                 error => this.errorMessage = <any>error);
     }
 
-    addStudent(name:string) {
+    addStudent(name:string):void {
         if (!name) {
             return;
         }
