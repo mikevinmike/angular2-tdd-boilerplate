@@ -13,7 +13,7 @@ export class AppComponent {
     public heroes = HEROES;
     public selectedHero:Hero;
 
-    public onSelect(hero:Hero) {
+    public onSelect(hero:Hero):void {
         this.selectedHero = hero;
     }
 }
