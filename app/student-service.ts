@@ -12,13 +12,13 @@ export class StudentService {
     private _studentsUrl = 'http://localhost:3000/students';  // URL, die aufgerufen werden soll -> JSON Server
 
     // Beispiel: Methode, welche ein JSON vom Server läd
-    getStudents():Promise<Student[]> {
+    getStudents():Observable<Student[]> {
         return this.http.get(this._studentsUrl) // URL, die aufgerufen wird
             .map(res => <Student[]> res.json().data)
             .catch(this.handleError) // Falls ein Fehler auftritt
     }
 
-    addStudent(name:string):Promise<Student> {
+    addStudent(name:string):Observable<Student> {
         let body = JSON.stringify({name});
         let headers = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions({headers: headers});
@@ -28,7 +28,7 @@ export class StudentService {
             .catch(this.handleError)
     }
 
-    private handleError(error:Response):any {
+    private handleError(error:Response):Observable<any> {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
     }
