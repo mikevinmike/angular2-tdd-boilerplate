@@ -1,8 +1,8 @@
 import {Injectable}     from 'angular2/core';
-import {Http, Response} from 'angular2/http';
-import {Headers, RequestOptions} from 'angular2/http';
+import {Http, Response, Headers, RequestOptions} from 'angular2/http';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/Rx';
 import {Student}        from './student';
-import {Observable}     from 'rxjs/Rx';
 
 @Injectable()
 export class StudentService {
@@ -11,23 +11,24 @@ export class StudentService {
 
     private _studentsUrl = 'http://localhost:3000/students';  // URL, die aufgerufen werden soll -> JSON Server
 
-    getStudents() : Observable<Student[]> {
-        return this.http.get(this._studentsUrl)
-            .map(res => <Student[]> res.json())
-            .catch(this.handleError)
+    // Beispiel: Methode, welche ein JSON vom Server läd
+    getStudents() {
+        return this.http.get(this._studentsUrl) // URL, die aufgerufen wird
+            .map(res => <Student[]> res.json().data)
+            .catch(this.handleError) // Falls ein Fehler auftritt
     }
 
-    addStudent (name: string) : Observable<Student> {
-        let body = JSON.stringify({ name });
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
+    addStudent(name:string) {
+        let body = JSON.stringify({name});
+        let headers = new Headers({'Content-Type': 'application/json'});
+        let options = new RequestOptions({headers: headers});
 
         return this.http.post(this._studentsUrl, body, options)
-            .map(res =>  <Student> res.json())
+            .map(res => <Student> res.json())
             .catch(this.handleError)
     }
 
-    private handleError (error: Response) {
+    private handleError(error:Response) {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
     }

@@ -1,16 +1,18 @@
 {
-  "students": [
-    {
-      "id": 123123123,
-      "name": "Christian Gruber"
-    },
-    {
-      "id": 14101235123,
-      "name": "Michael Dabernig"
-    },
-    {
-      "id": 234623412,
-      "name": "Sebastian Danninger"
-    }
-  ]
+  "students": {
+    "data": [
+      {
+        "id": 123123123,
+        "name": "Christian Gruber"
+      },
+      {
+        "id": 14101235123,
+        "name": "Michael Dabernig"
+      },
+      {
+        "id": 234623412,
+        "name": "Sebastian Danninger"
+      }
+    ]
+  }
 }
