@@ -2,6 +2,7 @@ import {
     it,
     describe,
     expect,
+    beforeEach,
     beforeEachProviders,
     inject,
     TestComponentBuilder,
@@ -18,13 +19,6 @@ import {RootRouter} from 'angular2/src/router/router';
 import {AppComponent} from "./app.component";
 import {HeroService} from "./hero.service";
 import {HeroesComponent} from "./heroes.component";
-
-// change MockApplicationRef to return AppComponent as componentType
-Object.defineProperty(MockApplicationRef.prototype, "componentTypes", {
-    value: [AppComponent],
-    enumerable: true,
-    configurable: true
-});
 
 class MockHeroService {
     public getHeroes() {
@@ -43,8 +37,16 @@ describe('AppComponent', () => {
         provide(ROUTER_PRIMARY_COMPONENT, {useValue: AppComponent}),
         provide(ApplicationRef, {useClass: MockApplicationRef}),
         provide(APP_BASE_HREF, {useValue: '/'}),
-
     ]);
+
+    beforeEach(() => {
+        // change MockApplicationRef to return AppComponent as componentType
+        Object.defineProperty(MockApplicationRef.prototype, "componentTypes", {
+            value: [AppComponent],
+            enumerable: true,
+            configurable: true
+        });
+    });
 
     it('should exist', inject([AppComponent], (appComponent:AppComponent) => {
         expect(appComponent).toBeDefined();
