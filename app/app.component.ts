@@ -11,11 +11,11 @@ export class Hero {
     styleUrls: ['app/app.component.css']
 })
 export class AppComponent {
-    public title = 'Tour of Heroes';
-    public heroes = HEROES;
+    public title:string = 'Tour of Heroes';
+    public heroes:Hero[] = HEROES;
     public selectedHero:Hero;
 
-    public onSelect(hero:Hero) {
+    public onSelect(hero:Hero):void {
         this.selectedHero = hero;
     }
 }
