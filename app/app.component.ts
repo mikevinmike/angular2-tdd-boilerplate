@@ -12,8 +12,8 @@ import {HeroService} from './hero.service';
     providers: [HeroService]
 })
 export class AppComponent implements OnInit {
-    public title = 'Tour of Heroes';
-    public heroes: Hero[];
+    public title:string = 'Tour of Heroes';
+    public heroes:Hero[];
     public selectedHero:Hero;
 
     constructor(private _heroService: HeroService) { }
