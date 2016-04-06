@@ -8,6 +8,7 @@ import {HeroDetailComponent} from "./hero-detail.component";
 @Component({
     selector: 'my-app',
     templateUrl: 'app/app.component.html',
+    styleUrls: ['app/app.component.css'],
     directives: [ROUTER_DIRECTIVES],
     providers: [
         ROUTER_PROVIDERS,

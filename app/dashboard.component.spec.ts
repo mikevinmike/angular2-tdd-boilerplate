@@ -9,8 +9,11 @@ import {
     injectAsync,fakeAsync, tick
 } from "angular2/testing";
 import {provide} from "angular2/core";
+import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, APP_BASE_HREF, ROUTER_PRIMARY_COMPONENT, RouteRegistry, Location, Router } from 'angular2/router';
 import {DashboardComponent} from "./dashboard.component";
 import {HeroService} from "./hero.service";
+import {RootRouter} from 'angular2/src/router/router';
+import {SpyLocation} from 'angular2/src/mock/location_mock';
 
 class MockHeroService {
     public getHeroes() {
@@ -24,12 +27,21 @@ class MockHeroService {
         ]);
     }
 }
+class MockRouter extends RootRouter {
+    constructor(registry:any, location:any, primaryComponent:any) {
+        super(registry, location, primaryComponent);
+    }
+}
 
 describe('DashboardComponent', () => {
 
     beforeEachProviders(() => [
         provide(HeroService, {useClass: MockHeroService}),
         DashboardComponent,
+        RouteRegistry,
+        provide(Router, {useClass: MockRouter}),
+        provide(ROUTER_PRIMARY_COMPONENT, {useValue: DashboardComponent}),
+        provide(Location, {useClass: SpyLocation}),
     ]);
 
     it('should exist', inject([DashboardComponent], (dashboardComponent:DashboardComponent) => {
@@ -41,6 +53,26 @@ describe('DashboardComponent', () => {
         tick(); // wait for the promise to be resolved (fakeAsync needed for tick())
         expect(dashboardComponent.heroes.length).toBeLessThan(5);
     })));
+
+    describe('gotoDetail()', () => {
+
+        let navigateToLink:any;
+
+        beforeEach(() => {
+            navigateToLink = undefined;
+            Object.defineProperty(MockRouter.prototype, 'navigate', {
+                value: (link:any) => navigateToLink = link
+            });
+        });
+
+        it('should navigate to the hero detail', inject([DashboardComponent], (dashboardComponent:DashboardComponent) => {
+            let hero = {id: 67, name: "Ryan"};
+            dashboardComponent.gotoDetail(hero);
+            expect(navigateToLink[0]).toBe("HeroDetail");
+            expect(navigateToLink[1].id).toBe(67);
+        }));
+
+    });
 
     it('should render a subheader', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb.createAsync(DashboardComponent)

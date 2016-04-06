@@ -77,4 +77,19 @@ describe('HeroDetailComponent', () => {
             });
     }));
 
+    it('should render a back button', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
+        return tcb.createAsync(HeroDetailComponent)
+            .then((fixture:ComponentFixture) => {
+                let element = fixture.nativeElement;
+                let heroDetailComponent = fixture.componentInstance;
+
+                fixture.detectChanges();
+                heroDetailComponent.hero = {id: 5, name: 'George'};
+                fixture.detectChanges();
+                let backButton = element.querySelector('button');
+                expect(backButton).not.toBe(null);
+                expect(backButton.innerText.includes('Back')).toBe(true);
+            });
+    }));
+
 });
