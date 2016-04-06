@@ -46,8 +46,9 @@ describe('StudentService', function () {
 
             // Aufruf der simulierten Connection
             studentService.getStudents().subscribe((students:Student[]) => {
-                expect(students.length).toBe(3);
-                expect(students[0].id).toBe(123123123);
+
+                // TODO
+
             });
 
         }));
@@ -72,7 +73,9 @@ describe('StudentService', function () {
             // Aufruf der simulierten Connection
             let name:string = 'Sebastian Danninger';
             studentService.addStudent(name).subscribe((student:Student) => {
-                expect(student.name).toBe(name);
+
+                // TODO
+
             });
 
         }));

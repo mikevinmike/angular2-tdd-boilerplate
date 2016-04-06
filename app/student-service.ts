@@ -13,9 +13,9 @@ export class StudentService {
 
     // Beispiel: Methode, welche ein JSON vom Server läd
     getStudents() {
-        return this.http.get(this._studentsUrl) // URL, die aufgerufen wird
-            .map(res => <Student[]> res.json().data)
-            .catch(this.handleError) // Falls ein Fehler auftritt
+
+        // TODO
+
     }
 
     addStudent(name:string) {
@@ -23,9 +23,7 @@ export class StudentService {
         let headers = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions({headers: headers});
 
-        return this.http.post(this._studentsUrl, body, options)
-            .map(res => <Student> res.json())
-            .catch(this.handleError)
+        // TODO
     }
 
     private handleError(error:Response) {

@@ -22,6 +22,7 @@ export class StudentListComponent implements OnInit {
         this.getStudents();
     }
 
+    // Komponente, welchen den Service konsumiert
     getStudents() {
         this._studentService.getStudents()
             .subscribe(
