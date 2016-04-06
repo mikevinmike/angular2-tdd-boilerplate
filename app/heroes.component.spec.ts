@@ -8,13 +8,12 @@ import {
     ComponentFixture,
     injectAsync,fakeAsync, tick
 } from "angular2/testing";
-import {provide, Component} from "angular2/core";
+import {SpyLocation} from 'angular2/src/mock/location_mock';
+import {provide} from "angular2/core";
+import { APP_BASE_HREF, ROUTER_PRIMARY_COMPONENT, RouteRegistry, Location, Router } from 'angular2/router';
+import {RootRouter} from 'angular2/src/router/router';
 import {HeroesComponent} from "./heroes.component";
 import {HeroService} from "./hero.service";
-import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, APP_BASE_HREF, ROUTER_PRIMARY_COMPONENT, RouteRegistry, Location, Router } from 'angular2/router';
-import {RootRouter} from 'angular2/src/router/router';
-import {SpyLocation} from 'angular2/src/mock/location_mock';
-import {HeroDetailComponent} from "./hero-detail.component";
 
 class MockHeroService {
     public getHeroes() {

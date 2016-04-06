@@ -11,7 +11,7 @@ import {
 import {HeroDetailComponent} from "./hero-detail.component";
 import {provide} from "angular2/core";
 import {HeroService} from "./hero.service";
-import { RouteParams } from 'angular2/router';
+import {RouteParams} from 'angular2/router';
 
 
 class MockHeroService {

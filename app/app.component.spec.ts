@@ -6,16 +6,18 @@ import {
     inject,
     TestComponentBuilder,
     ComponentFixture,
-    injectAsync,fakeAsync, tick
+    injectAsync,
+    fakeAsync,
+    tick
 } from "angular2/testing";
+import {MockApplicationRef} from 'angular2/src/mock/mock_application_ref';
+import {SpyLocation} from 'angular2/src/mock/location_mock';
 import {provide, ApplicationRef} from "angular2/core";
-import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, APP_BASE_HREF, ROUTER_PRIMARY_COMPONENT, RouteRegistry, Location, Router } from 'angular2/router';
+import { APP_BASE_HREF, ROUTER_PRIMARY_COMPONENT, RouteRegistry, Location, Router } from 'angular2/router';
+import {RootRouter} from 'angular2/src/router/router';
 import {AppComponent} from "./app.component";
 import {HeroService} from "./hero.service";
-import {MockApplicationRef} from 'angular2/src/mock/mock_application_ref';
 import {HeroesComponent} from "./heroes.component";
-import {SpyLocation} from 'angular2/src/mock/location_mock';
-import {RootRouter} from 'angular2/src/router/router';
 
 // change MockApplicationRef to return AppComponent as componentType
 Object.defineProperty(MockApplicationRef.prototype, "componentTypes", {
