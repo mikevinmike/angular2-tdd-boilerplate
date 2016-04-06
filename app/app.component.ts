@@ -9,8 +9,8 @@ import {HeroDetailComponent} from "./hero-detail.component";
     directives: [HeroDetailComponent]
 })
 export class AppComponent {
-    public title = 'Tour of Heroes';
-    public heroes = HEROES;
+    public title:string = 'Tour of Heroes';
+    public heroes:Hero[] = HEROES;
     public selectedHero:Hero;
 
     public onSelect(hero:Hero):void {
