@@ -2,6 +2,7 @@ import {
     it,
     describe,
     expect,
+    beforeEach,
     beforeEachProviders,
     inject,
     injectAsync,
@@ -15,13 +16,6 @@ import { APP_BASE_HREF, ROUTER_PRIMARY_COMPONENT, RouteRegistry, Location, Route
 import {RootRouter} from 'angular2/src/router/router';
 import {AppComponent} from './app.component';
 
-// change MockApplicationRef to return AppComponent as componentType
-Object.defineProperty(MockApplicationRef.prototype, "componentTypes", {
-    value: [AppComponent],
-    enumerable: true,
-    configurable: true
-});
-
 describe('AppComponent', () => {
 
     beforeEachProviders(() => [
@@ -33,6 +27,15 @@ describe('AppComponent', () => {
         provide(ApplicationRef, {useClass: MockApplicationRef}),
         provide(APP_BASE_HREF, {useValue: '/'}),
     ]);
+
+    beforeEach(() => {
+        // change MockApplicationRef to return AppComponent as componentType
+        Object.defineProperty(MockApplicationRef.prototype, "componentTypes", {
+            value: [AppComponent],
+            enumerable: true,
+            configurable: true
+        });
+    });
 
     it('should be able to navigate to Heroes', injectAsync([Router, Location], (router:Router, location:Location) => {
         return router.navigate(['Heroes']).then(() => {
