@@ -22,7 +22,8 @@ module.exports = function (config) {
 
             // paths to support debugging with source maps in dev tools
             {pattern: 'app/**/*.ts', included: false, watched: false},
-            {pattern: 'app/**/*.js.map', included: false, watched: false}
+            {pattern: 'app/**/*.js.map', included: false, watched: false},
+            {pattern: 'app/**/*.css', included: false, watched: false}
         ],
 
         // proxied base paths
