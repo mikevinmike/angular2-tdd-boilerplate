@@ -1,5 +1,6 @@
 import {it, describe, expect, beforeEachProviders, inject, fakeAsync, tick} from "angular2/testing";
 import {HeroService} from "./hero.service";
+import {HEROES} from "./mock-heroes";
 
 describe('HeroService', () => {
 
@@ -36,6 +37,22 @@ describe('HeroService', () => {
                 expect(heroes instanceof Array).toBe(true);
             });
             tick(2000); // wait 2 seconds
+        })));
+
+    });
+
+    describe('getHero(id)', () => {
+
+        beforeEach(() => {
+            HEROES.push({id: 493, name: "Eric"});
+        });
+
+        it('should return the specified hero', inject([HeroService], fakeAsync((heroService:HeroService) => {
+            let promise = heroService.getHero(493);
+            expect(promise instanceof Promise).toBe(true);
+            Promise.resolve(promise).then(function (hero) {
+                expect(hero).toBeDefined();
+            });
         })));
 
     });
