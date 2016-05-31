@@ -14,7 +14,7 @@ export class StudentService {
     // Beispiel: Methode, welche ein JSON vom Server läd
     getStudents():Observable<Student[]> {
         return this.http.get(this._studentsUrl) // URL, die aufgerufen wird
-            .map(res => <Student[]> res.json().data)
+            .map(res => <Student[]> res.json())
             .catch(this.handleError) // Falls ein Fehler auftritt
     }
 
