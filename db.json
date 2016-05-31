@@ -1,6 +1,5 @@
 {
-  "students": {
-    "data": [
+  "students": [
       {
         "id": 123123123,
         "name": "Christian Gruber"
@@ -14,5 +13,4 @@
         "name": "Sebastian Danninger"
       }
     ]
-  }
 }

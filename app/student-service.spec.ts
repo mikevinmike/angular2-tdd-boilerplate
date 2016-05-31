@@ -33,13 +33,11 @@ describe('StudentService', function () {
                 (connection:MockConnection) => {
                     connection.mockRespond(new Response(
                         new ResponseOptions({
-                                body: {
-                                    "data": [
-                                        {"id": 123123123, "name": "Christian Gruber"},
-                                        {"id": 14101235123, "name": "Michael Dabernig"},
-                                        {"id": 234623412, "name": "Sebastian Danninger"}
-                                    ]
-                                }
+                                body: [
+                                    {"id": 123123123, "name": "Christian Gruber"},
+                                    {"id": 14101235123, "name": "Michael Dabernig"},
+                                    {"id": 234623412, "name": "Sebastian Danninger"}
+                                ]
                             }
                         )));
                 });
